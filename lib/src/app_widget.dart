@@ -13,7 +13,7 @@ class AppWidget extends StatelessWidget {
       title: 'TodoList',
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-          primary: Color.fromRGBO(156, 41, 176, 1),
+          primary: Color.fromRGBO(31, 154, 233, 1),
           secondary: Color.fromARGB(255, 102, 225, 241),
           tertiary: Color.fromRGBO(239, 228, 241, 1),
           onPrimary: Colors.white,

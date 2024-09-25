@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memobelc_front/src/core/core.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -11,14 +12,18 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Esqueceu senha'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: Image(
+                image: AssetImage(AppImages.logoPNG),
+                width: 200,
+                height: 200,
+              ),
+            ),
             const Text('Digite seu E-mail para recuperar sua senha:'),
             const SizedBox(height: 16.0),
             TextField(

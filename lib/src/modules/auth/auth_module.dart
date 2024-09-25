@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:memobelc_front/src/modules/auth/presenter/pages/login_page.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/pages/forgot_password_page.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/pages/register_page.dart';
+import 'package:memobelc_front/src/modules/auth/presenter/pages/splash_page.dart';
 // import import 'package:memobelc_front/src/modules/auth/presenter/stores/auth_store.dart';
 // import import 'package:memobelc_front/src/modules/dashboard/dashboard_module.dart';
 
@@ -36,7 +37,8 @@ class AuthModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child(Modular.initialRoute, child: (context) => const LoginPage());
+    r.child(Modular.initialRoute, child: (context) => const SplashPage());
+    r.child('/login', child: (context) => const LoginPage());
     r.child('/register', child: (context) => const RegisterPage());
     r.child('/forgot-password', child: (context) => const ForgotPasswordPage());
 

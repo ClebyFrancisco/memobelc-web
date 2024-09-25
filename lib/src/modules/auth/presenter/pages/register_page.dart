@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:memobelc_front/src/core/core.dart';
 // import import 'package:memobelc_front/src/modules/auth/presenter/stores/auth_store.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -34,14 +35,18 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cadastro'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: Image(
+                image: AssetImage(AppImages.logoPNG),
+                width: 200,
+                height: 200,
+              ),
+            ),
             TextField(
               controller: usernameController,
               decoration: InputDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:memobelc_front/src/core/core.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -33,14 +34,18 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: Image(
+                image: AssetImage(AppImages.logoPNG),
+                width: 200,
+                height: 200,
+              ),
+            ),
             TextField(
               controller: usernameController,
               decoration: InputDecoration(
