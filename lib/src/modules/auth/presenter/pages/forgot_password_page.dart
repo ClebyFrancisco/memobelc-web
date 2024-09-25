@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:memobelc_front/src/core/core.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -12,6 +13,14 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: TextButton(
+          onPressed: () {
+            Modular.to.navigate('/login');
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

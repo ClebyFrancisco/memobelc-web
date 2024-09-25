@@ -35,6 +35,14 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: TextButton(
+          onPressed: () {
+            Modular.to.navigate('/login');
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:memobelc_front/src/core/core.dart';
+import 'package:memobelc_front/src/modules/auth/presenter/stores/auth_store.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,7 +18,7 @@ class LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // final authStore = Modular.get<AuthStore>();
+  final authStore = Modular.get<AuthStore>();
 
   @override
   void initState() {
@@ -114,16 +115,14 @@ class LoginPageState extends State<LoginPage> {
             const SizedBox(height: 16.0),
             FilledButton(
               onPressed: () async {
-                // if (await authStore.login(
-                //     usernameController.text, passwordController.text)) {
-                //   Modular.to.navigate('/dashboard/',
-                //       arguments: authStore.currentUser);
-                // } else {
-                //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                //       backgroundColor: Colors.redAccent,
-                //       content: Text("E-mail ou senha inválidos"),
-                //       behavior: SnackBarBehavior.floating));
-                // }
+                if (await authStore.login(
+                    usernameController.text, passwordController.text)) {
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.redAccent,
+                      content: Text("E-mail ou senha inválidos"),
+                      behavior: SnackBarBehavior.floating));
+                }
               },
               child: const Text('Login'),
             ),
