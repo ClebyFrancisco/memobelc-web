@@ -1,11 +1,9 @@
-
-
 import 'package:memobelc_front/src/modules/auth/domain/errors/error.dart';
 import 'package:memobelc_front/src/modules/auth/domain/repositories/login_repository.dart';
 import 'package:memobelc_front/src/modules/auth/infra/comm_packages/proto/pb/auth.pb.dart';
 
 abstract class IPostLogin {
-  Future<(IError?, LoginResponse?)> call(String username, String password);
+  Future<(IError?, LoginResponse?)> call(LoginRequest data);
 }
 
 class PostLogin implements IPostLogin {
@@ -14,7 +12,7 @@ class PostLogin implements IPostLogin {
   PostLogin(this._loginRepository);
 
   @override
-  Future<(IError?, LoginResponse?)> call(String username, String password) async {
-    return await _loginRepository.postLogin(username, password);
+  Future<(IError?, LoginResponse?)> call(data) async {
+    return await _loginRepository.postLogin(data);
   }
 }
