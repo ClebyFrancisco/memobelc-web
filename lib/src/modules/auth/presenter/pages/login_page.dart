@@ -98,9 +98,10 @@ class LoginPageState extends State<LoginPage> {
               children: [
                 Row(children: [
                   Checkbox(
-                      value: rememberMe,
+                      value: authStore.rememberMe,
                       onChanged: (newBool) {
-                        setState(() => rememberMe = !rememberMe);
+                        setState(
+                            () => authStore.rememberMe = !authStore.rememberMe);
                       }),
                   const Text('Lembrar de mim'),
                 ]),

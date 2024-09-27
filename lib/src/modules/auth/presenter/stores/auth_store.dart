@@ -16,6 +16,7 @@ abstract class _AuthStore with Store {
   _AuthStore(this._loginUseCase, this._refreshToken);
 
   final currentUser = LoginResponse();
+  bool rememberMe = true;
 
   Future<bool> login(String email, String password) async {
     final response = await _loginUseCase
@@ -30,15 +31,18 @@ abstract class _AuthStore with Store {
     }
     return false;
   }
-    Future<bool> refreshToken(String token) async {
-    final response = await _refreshToken
-        .call(token);
+
+  Future<bool> refreshToken(String token) async {
+    final response = await _refreshToken.call(token);
     if (response.$2 != null) {
       currentUser.email = response.$2!.email;
       currentUser.name = response.$2!.name;
       currentUser.token = response.$2!.token;
 
-      saveUserToken(response.$2!.token);
+      if (rememberMe) {
+        saveUserToken(response.$2!.token);
+      }
+
       return true;
     }
     return false;
