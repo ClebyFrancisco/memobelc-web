@@ -117,6 +117,8 @@ class LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 if (await authStore.login(
                     usernameController.text, passwordController.text)) {
+                  Modular.to.navigate('/dashboard/',
+                      arguments: authStore.currentUser);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       backgroundColor: Colors.redAccent,
