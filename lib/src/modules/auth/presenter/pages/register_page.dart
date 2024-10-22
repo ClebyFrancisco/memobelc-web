@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:memobelc_front/src/core/core.dart';
+import 'package:memobelc_front/src/modules/auth/presenter/stores/auth_store.dart';
 // import import 'package:memobelc_front/src/modules/auth/presenter/stores/auth_store.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -13,11 +14,12 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool _obscureText = true;
 
-  final usernameController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  // final authStore = Modular.get<AuthStore>();
+  final authStore = Modular.get<AuthStore>();
 
   @override
   void initState() {
@@ -26,7 +28,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    usernameController.dispose();
+    nameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
@@ -56,10 +59,28 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             TextField(
-              controller: usernameController,
+              controller: nameController,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'Nome',
                 prefixIcon: const Icon(Icons.person),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  ),
+                ),
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.tertiary,
+              ),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                prefixIcon: const Icon(Icons.email),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(
@@ -131,10 +152,23 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
-                // await authStore.register(usernameController.text,
-                //     passwordController.text, confirmPasswordController.text);
-
-                // Modular.to.navigate('/');
+                if (await authStore.register(
+                  nameController.text,
+                  emailController.text,
+                  passwordController.text,
+                  confirmPasswordController.text,
+                )) {
+                  Modular.to.navigate('/code');
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.greenAccent,
+                      content: Text("Cadastro criado com sucesso"),
+                      behavior: SnackBarBehavior.floating));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.redAccent,
+                      content: Text("E-mail ou senha inválidos"),
+                      behavior: SnackBarBehavior.floating));
+                }
               },
               child: const Text('Registrar'),
             ),

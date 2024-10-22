@@ -14,6 +14,7 @@ import 'package:memobelc_front/src/modules/auth/presenter/pages/login_page.dart'
 import 'package:memobelc_front/src/modules/auth/presenter/pages/forgot_password_page.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/pages/register_page.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/pages/splash_page.dart';
+import 'package:memobelc_front/src/modules/auth/presenter/pages/verify_code_page.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/stores/auth_store.dart';
 import 'package:memobelc_front/src/modules/dashboard/dash_module.dart';
 
@@ -43,6 +44,7 @@ class AuthModule extends Module {
     r.child(Modular.initialRoute, child: (context) => const SplashPage());
     r.child('/login', child: (context) => const LoginPage());
     r.child('/register', child: (context) => const RegisterPage());
+    r.child('/code', child: (context) => const VerificationCodePage());
     r.child('/forgot-password', child: (context) => const ForgotPasswordPage());
 
     r.module('/dashboard/', module: DashboardModule());

@@ -32,6 +32,17 @@ abstract class _AuthStore with Store {
     return false;
   }
 
+  Future<bool> register(String name, String email, String password,
+      String confirmPassword) async {
+    if (password == confirmPassword) {
+      // print(name);
+      // print(email);
+      // print(password);
+      return true;
+    }
+    return false;
+  }
+
   Future<bool> refreshToken(String token) async {
     final response = await _refreshToken.call(token);
     if (response.$2 != null) {
