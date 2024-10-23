@@ -1,5 +1,6 @@
 import 'package:memobelc_front/src/modules/auth/domain/usecases/post_login.dart';
 import 'package:memobelc_front/src/modules/auth/domain/usecases/post_refresh_token.dart';
+import 'package:memobelc_front/src/modules/auth/domain/usecases/post_register.dart';
 import 'package:memobelc_front/src/modules/auth/infra/comm_packages/proto/pb/auth.pb.dart';
 import 'package:memobelc_front/src/provider/shared_preferences.dart';
 import 'package:mobx/mobx.dart';
@@ -11,9 +12,10 @@ class AuthStore = _AuthStore with _$AuthStore;
 
 abstract class _AuthStore with Store {
   final IPostLogin _loginUseCase;
+  final IPostRegister _registerUseCase;
   final IPostRefreshToken _refreshToken;
 
-  _AuthStore(this._loginUseCase, this._refreshToken);
+  _AuthStore(this._loginUseCase, this._registerUseCase, this._refreshToken);
 
   final currentUser = LoginResponse();
   bool rememberMe = true;
@@ -35,10 +37,14 @@ abstract class _AuthStore with Store {
   Future<bool> register(String name, String email, String password,
       String confirmPassword) async {
     if (password == confirmPassword) {
-      // print(name);
-      // print(email);
-      // print(password);
-      return true;
+      final response = await _registerUseCase
+          .call(RegisterRequest(name: name, email: email, password: password));
+
+      // print(response.$2!.message);
+
+      if (response.$2 != null) {
+        return true;
+      }
     }
     return false;
   }

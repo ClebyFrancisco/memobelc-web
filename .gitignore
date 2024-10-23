@@ -31,6 +31,10 @@ migrate_working_dir/
 .pub/
 /build/
 
+**/proto/pb/*
+!**/proto/pb/
+!**/proto/pb/.gitkeep
+
 # Symbolication related
 app.*.symbols
 

@@ -2,14 +2,19 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:memobelc_front/src/modules/auth/domain/repositories/login_repository.dart';
 import 'package:memobelc_front/src/modules/auth/domain/repositories/refresh_token.dart';
+import 'package:memobelc_front/src/modules/auth/domain/repositories/register_repository.dart';
 import 'package:memobelc_front/src/modules/auth/domain/usecases/post_login.dart';
 import 'package:memobelc_front/src/modules/auth/domain/usecases/post_refresh_token.dart';
-import 'package:memobelc_front/src/modules/auth/external/datasources/http/auth_datasource.dart';
+import 'package:memobelc_front/src/modules/auth/domain/usecases/post_register.dart';
+import 'package:memobelc_front/src/modules/auth/external/datasources/http/login_datasource.dart';
 import 'package:memobelc_front/src/modules/auth/external/datasources/http/refresh_token_datasource.dart';
+import 'package:memobelc_front/src/modules/auth/external/datasources/http/register_datasource.dart';
 import 'package:memobelc_front/src/modules/auth/infra/datasources/login_datasource.dart';
 import 'package:memobelc_front/src/modules/auth/infra/datasources/refresh_token_datasource.dart';
+import 'package:memobelc_front/src/modules/auth/infra/datasources/register_datasource.dart';
 import 'package:memobelc_front/src/modules/auth/infra/repositories/login_repository.dart';
 import 'package:memobelc_front/src/modules/auth/infra/repositories/refresh_token_repo.dart';
+import 'package:memobelc_front/src/modules/auth/infra/repositories/register_repository.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/pages/login_page.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/pages/forgot_password_page.dart';
 import 'package:memobelc_front/src/modules/auth/presenter/pages/register_page.dart';
@@ -26,15 +31,15 @@ class AuthModule extends Module {
 
     i.add<IPostLoginDatasource>(LoginDatasource.new);
     i.add<IPostRefreshTokenDatasource>(RefreshTokenDatasource.new);
-    // i.add<IPostRegisterDatasource>(RegisterDatasource.new);
+    i.add<IPostRegisterDatasource>(RegisterDatasource.new);
 
     i.add<ILoginRepository>(LoginRepository.new);
     i.add<IRefreshTokenRepository>(RefreshTokenRepository.new);
-    // i.add<IRegisterRepository>(RegisterRepository.new);
+    i.add<IRegisterRepository>(RegisterRepository.new);
 
     i.add<IPostLogin>(PostLogin.new);
     i.add<IPostRefreshToken>(PostRefreshToken.new);
-    // i.add<IPostRegister>(PostRegister.new);
+    i.add<IPostRegister>(PostRegister.new);
 
     i.addSingleton<AuthStore>(AuthStore.new);
   }
