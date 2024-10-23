@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:memobelc_front/src/core/core.dart';
+import 'package:memobelc_front/src/modules/auth/presenter/stores/auth_store.dart';
 
 class VerificationCodePage extends StatefulWidget {
-  const VerificationCodePage({super.key});
+  final String? token;
+  const VerificationCodePage({super.key, this.token});
 
   @override
   VerificationCodePageState createState() => VerificationCodePageState();
@@ -13,6 +15,13 @@ class VerificationCodePageState extends State<VerificationCodePage> {
   final List<TextEditingController> _controllers =
       List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+
+  final authStore = Modular.get<AuthStore>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -28,32 +37,37 @@ class VerificationCodePageState extends State<VerificationCodePage> {
   void _onChanged(String value, int index) {
     if (value.isNotEmpty) {
       if (index < 5) {
-        FocusScope.of(context)
-            .requestFocus(_focusNodes[index + 1]); 
+        FocusScope.of(context).requestFocus(_focusNodes[index + 1]);
       } else {
         _focusNodes[index].unfocus();
       }
     }
   }
 
-  void _submitCode() {
+  void _submitCode() async {
     String code = _controllers.map((controller) => controller.text).join();
 
-    if (code.length == 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Código: $code validado!')),
-      );
+    if (code.length != 6) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text("Codigo Incompleto!"),
+          behavior: SnackBarBehavior.floating));
+    }
+
+    if (await authStore.sendCode(code, widget.token!)) {
+      Modular.to.navigate('/dashboard/', arguments: authStore.currentUser);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Insira os 6 dígitos!')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text("Código inválido!"),
+          behavior: SnackBarBehavior.floating));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
+      appBar: AppBar(
         title: TextButton(
           onPressed: () {
             Modular.to.navigate('/login');
@@ -100,7 +114,7 @@ class VerificationCodePageState extends State<VerificationCodePage> {
               }),
             ),
             const SizedBox(height: 20),
-           FilledButton(
+            FilledButton(
               onPressed: _submitCode,
               child: const Text('Verificar'),
             ),

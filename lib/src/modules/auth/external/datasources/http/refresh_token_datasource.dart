@@ -14,7 +14,7 @@ class RefreshTokenDatasource implements IPostRefreshTokenDatasource {
   Future<Uint8List?> postRefreshToken(Uint8List tokenEncoded) async {
 try {
       final response = await httpClient.post(
-        Uri.parse(refreshToken),
+        Uri.parse(refreshTokenRoute),
         body: tokenEncoded,
       );
       if (response.statusCode == 200) {

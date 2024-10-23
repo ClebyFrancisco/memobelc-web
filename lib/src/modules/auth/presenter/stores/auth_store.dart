@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:memobelc_front/src/modules/auth/domain/usecases/post_code.dart';
 import 'package:memobelc_front/src/modules/auth/domain/usecases/post_login.dart';
 import 'package:memobelc_front/src/modules/auth/domain/usecases/post_refresh_token.dart';
 import 'package:memobelc_front/src/modules/auth/domain/usecases/post_register.dart';
@@ -14,8 +16,9 @@ abstract class _AuthStore with Store {
   final IPostLogin _loginUseCase;
   final IPostRegister _registerUseCase;
   final IPostRefreshToken _refreshToken;
+  final IPostCode _codeUseCase;
 
-  _AuthStore(this._loginUseCase, this._registerUseCase, this._refreshToken);
+  _AuthStore(this._loginUseCase, this._registerUseCase, this._refreshToken, this._codeUseCase);
 
   final currentUser = LoginResponse();
   bool rememberMe = true;
@@ -40,11 +43,23 @@ abstract class _AuthStore with Store {
       final response = await _registerUseCase
           .call(RegisterRequest(name: name, email: email, password: password));
 
-      // print(response.$2!.message);
-
       if (response.$2 != null) {
+        currentUser.token = response.$2!.message;
         return true;
       }
+    }
+    return false;
+  }
+
+  Future<bool> sendCode(String code, String token) async {
+    final response = await _codeUseCase.call(CodeRequest(code: code), token);
+    if (response.$2 != null) {
+      currentUser.email = response.$2!.email;
+      currentUser.name = response.$2!.name;
+      currentUser.token = response.$2!.token;
+
+      saveUserToken(response.$2!.token);
+      return true;
     }
     return false;
   }

@@ -158,7 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   passwordController.text,
                   confirmPasswordController.text,
                 )) {
-                  Modular.to.navigate('/code');
+                  Modular.to.navigate('/code/${authStore.currentUser.token}');
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       backgroundColor: Colors.greenAccent,
                       content: Text("Cadastro criado com sucesso"),
